@@ -5,10 +5,10 @@ const config = {
 };
 
 class Team {
-  constructor(name, value, path) {
+  constructor(name, value, imgPath) {
     this.name = name;
     this.value = value;
-    this.path = path;
+    this.imgPath = imgPath;
   }
 }
 
@@ -71,7 +71,7 @@ class View {
   }
 
   static createInfoContainer(obj) {
-    config.infoCon.innerHTML = `
+    document.getElementById('infoContainer').innerHTML = `
       <div class="col-12 px-0 pl-2">
         <p class="m-0">Name : ${obj.name}</p>
         <p class="m-0">Value : ${obj.value} bil</p>
@@ -88,13 +88,69 @@ class View {
           <button class="btn btn-light col-12">${i}</button>
         </div>
       `;
+    }
 
-      document.getElementById('btnContainer').innerHTML = `
-        <div class='col-12 px-0 d-flex flex-wrap py-2'>
-          ${htmlString}
-        </div>
+    document.getElementById('btnContainer').innerHTML = `
+      <div class='col-12 px-0 d-flex flex-wrap py-2'>
+        ${htmlString}
+      </div>
+    `;
+
+    for (let i = 1; i <= teams.length; i++) {
+      document
+        .getElementById('btnContainer')
+        .querySelectorAll('.btn')
+        [i - 1].addEventListener('click', function () {
+          Controller.slideJump(i);
+        });
+    }
+  }
+}
+
+class Controller {
+  static slideJump(input) {
+    input--;
+    let main = document.getElementById('main');
+    let index = main.getAttribute('data-index');
+
+    let currentElement = document.createElement('div');
+    currentElement.classList.add('d-flex', 'justify-content-center');
+
+    if (index === -1) {
+      currentElement.innerHTML = `
+      <img class='col-10' src="${teams[0].imgPath}" alt="${teams[0].name}">
+      `;
+    } else {
+      currentElement.innerHTML = `
+      <img class='col-10' src="${teams[index].imgPath}" alt="${teams[index].name}">
       `;
     }
+
+    index = input;
+
+    let extra = document.getElementById('extra');
+    let nextElement = document.createElement('div');
+    nextElement.innerHTML = `
+      <img class='col-10' src="${teams[index].imgPath}" alt="${teams[index].name}">
+    `;
+
+    View.createInfoContainer(teams[index]);
+    main.setAttribute('data-index', index.toString());
+
+    main.innerHTML = '';
+    main.append(nextElement);
+
+    extra.innerHTML = '';
+    extra.append(currentElement);
+
+    main.classList.add('expand-animation');
+    extra.classList.add('deplete-animation');
+
+    let slideShow = document.getElementById('slideShow');
+
+    slideShow.innerHTML = '';
+    slideShow.append(extra);
+    slideShow.append(main);
   }
 }
 
