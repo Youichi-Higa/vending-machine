@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+.logo {
+  width: 400px;
+}
+
+.bg-tricolor {
+  background: linear-gradient(
+    75deg,
+    rgba(3, 104, 182, 1) 20%,
+    rgba(255, 254, 254, 1) 50%,
+    rgba(214, 30, 87, 1) 80%
+  );
+}
+
+.full-width {
+  width: 100%;
+  flex-shrink: 0;
+}
