@@ -115,16 +115,9 @@ class Controller {
 
     let currentElement = document.createElement('div');
     currentElement.classList.add('d-flex', 'justify-content-center');
-
-    if (index === -1) {
-      currentElement.innerHTML = `
-      <img class='col-10' src="${teams[0].imgPath}" alt="${teams[0].name}">
-      `;
-    } else {
-      currentElement.innerHTML = `
+    currentElement.innerHTML = `
       <img class='col-10' src="${teams[index].imgPath}" alt="${teams[index].name}">
       `;
-    }
 
     let animationType = Algorithm.chooseRotation(index, input, teams.length);
 
